@@ -1,0 +1,152 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 1rem;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(65deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+.wave-hello {
+  display: inline-block;
+  transform-origin: bottom right;
+  animation: wave 1.25s ease 5;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.25em;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1.5rem;
+  font-family: sans-serif;
+}
+
+textarea {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 4rem;
+}
+
+button {
+  padding: 1rem 1.5rem;
+  background-color: rgb(0, 65, 194);
+  color: white;
+  font-weight: bold;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.button-success {
+  background-color: #338700;
+}
+
+.button-update {
+  background-color: #f5b324;
+  color: black;
+}
+
+.button-error {
+  background-color: #e1261c;
+}
+
+#copyNode {
+  width: 100%;
+  height: 16em;
+  padding: 1em;
+}
+
+/* Table */
+.Table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.Table th,
+.Table td {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.Table th {
+  background: #333;
+  color: white;
+}
+
+.Table th:nth-child(1),
+.Table td:nth-child(1) {
+  max-width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.Table th:nth-child(2),
+.Table td:nth-child(2),
+.Table th:nth-child(3),
+.Table td:nth-child(3) {
+  width: 70px;
+  text-align: center;
+}
+
+.Table th:nth-child(5),
+.Table td:nth-child(5),
+.Table th:nth-child(6),
+.Table td:nth-child(6) {
+  width: 40px;
+  text-align: center;
+}
+
+.Table th:nth-child(4),
+.Table td:nth-child(4) {
+  max-width: 220px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.Table button {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  background-color: #ddd;
+}

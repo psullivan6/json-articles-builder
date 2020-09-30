@@ -1,24 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, useFormikContext } from "formik";
-import Table from "./Table";
 import { v4 as uuidv4 } from "uuid";
+import Table from "./Table";
+import DatePicker from "./components/DatePicker";
 import "./styles.css";
-
-// From: https://stackoverflow.com/questions/17710147/image-convert-to-base64
-function readFile(event) {
-  console.log("FILE READ CALLED", event);
-
-  if (event.target.files && event.target.files[0]) {
-    var FR = new FileReader();
-
-    FR.addEventListener("load", function (e) {
-      document.getElementById("img").src = e.target.result;
-      document.getElementById("b64").innerHTML = e.target.result;
-    });
-
-    FR.readAsDataURL(event.target.files[0]);
-  }
-}
 
 const SubmitButton = ({ status, ...props }) => {
   if (status === "success") {
@@ -65,7 +50,10 @@ const CRUDButton = ({
   const handleClick = () => {
     setStories({
       ...stories,
-      [crud.id]: values
+      [crud.id]: {
+        id: crud.id,
+        ...values
+      }
     });
     setCrud({ id: uuidv4(), status: "create" });
   };
@@ -88,12 +76,12 @@ export default function App() {
   const [stories, setStories] = useState({});
   const [crud, setCrud] = useState({ id: uuidv4(), status: "create" });
   const [initialValues, setInitialValues] = useState({
-    category: "",
+    id: uuidv4(),
     description: "",
+    expirationDate: null,
+    publishDate: null,
     title: "",
-    linkURL: "",
-    order: 0,
-    section: "E"
+    url: ""
   });
 
   useEffect(() => {
@@ -117,20 +105,18 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>
-        Hey{" "}
-        <span role="img" aria-label="Wave Hello" className="wave-hello">
-          👋
-        </span>
-      </h1>
-      <h2>
-        Fill out the fields below, click the "Copy the JSON" button, and paste
-        the data.
-      </h2>
-
-      <input id="inp" type="file" onChange={readFile} />
-      <p id="b64"></p>
-      <img id="img" height="150" alt="Base64" />
+      <header>
+        <h1>
+          Hey{" "}
+          <span role="img" aria-label="Wave Hello" className="wave-hello">
+            👋
+          </span>
+        </h1>
+        <h2>
+          Fill out the fields below, click the "Copy the JSON" button, and paste
+          the data.
+        </h2>
+      </header>
 
       <Formik
         initialValues={initialValues}
@@ -150,13 +136,39 @@ export default function App() {
         }}
       >
         <Form>
-          <label htmlFor="title">Link Title:</label>
-          <Field id="title" name="title" placeholder="Link Title" />
+          <label htmlFor="title">Title:</label>
+          <Field id="title" name="title" placeholder="Title" />
+
+          <div className="DateBox">
+            <div>
+              <label htmlFor="publishDate">Publish Date:</label>
+              {/* Saved as ISO string */}
+              <DatePicker
+                id="publishDate"
+                name="publishDate"
+                placeholderText="Click to select a date"
+                showTimeSelect
+                dateFormat="MM/dd/yyyy h:mm aa"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="expirationDate">Expiration Date:</label>
+              {/* Saved as ISO string */}
+              <DatePicker
+                id="expirationDate"
+                name="expirationDate"
+                placeholderText="Leave Blank if none"
+                showTimeSelect
+                dateFormat="MM/dd/yyyy h:mm aa"
+              />
+            </div>
+          </div>
 
           <br />
 
-          <label htmlFor="linkURL">Link URL:</label>
-          <Field id="linkURL" name="linkURL" placeholder="Link URL" />
+          <label htmlFor="url">Link URL:</label>
+          <Field id="url" name="url" placeholder="Link URL" />
 
           <br />
 
@@ -167,27 +179,6 @@ export default function App() {
             name="description"
             placeholder="Description"
           />
-
-          <br />
-
-          <label htmlFor="category">Category:</label>
-          <Field id="category" name="category" placeholder="Category" />
-
-          <br />
-
-          <label htmlFor="section">Section</label>
-          <Field as="select" name="section">
-            <option value="H">H - Top Headlines</option>
-            <option value="S">S - Related Stories</option>
-            <option value="E">E - Engagement Stories</option>
-          </Field>
-
-          <br />
-
-          <label htmlFor="order">Order:</label>
-          <Field id="order" name="order" placeholder="Order" type="number" />
-
-          <br />
 
           <CRUDButton
             status={submitStatus}

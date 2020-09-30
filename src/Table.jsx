@@ -1,4 +1,5 @@
 import React from "react";
+import { format } from "date-fns";
 
 const Table = ({ data, onEditItem, onRemoveItem }) => {
   return (
@@ -6,9 +7,8 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
       <thead>
         <tr>
           <th>Title</th>
-          <th>Section</th>
-          <th>Order</th>
           <th>Description</th>
+          <th>Date</th>
           <th>
             <span role="img" aria-label="remove item">
               ✏️
@@ -23,14 +23,13 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
       </thead>
       <tbody>
         {Object.keys(data).map((id) => {
-          const { title, section, order, description } = data[id];
+          const { title, publishDate, description } = data[id];
 
           return (
             <tr key={id}>
               <td>{title}</td>
-              <td>{section}</td>
-              <td>{order}</td>
               <td>{description}</td>
+              <td>{format(publishDate, "MM/dd/yy")}</td>
               <td>
                 <button
                   type="button"

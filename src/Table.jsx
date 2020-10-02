@@ -1,7 +1,17 @@
 import React from "react";
 import { format } from "date-fns";
+import { useFormikContext } from "formik";
 
 const Table = ({ data, onEditItem, onRemoveItem }) => {
+  const { resetForm } = useFormikContext();
+
+  const handleEdit = ({ id, data }) => {
+    resetForm({
+      values: data
+    });
+    onEditItem({ id, data });
+  };
+
   return (
     <table className="Table">
       <thead>
@@ -34,7 +44,7 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
                 <button
                   type="button"
                   title="Edit Item"
-                  onClick={() => onEditItem({ id, data: data[id] })}
+                  onClick={() => handleEdit({ id, data: data[id] })}
                 >
                   <span role="img" aria-label="Edit Item">
                     ✏️

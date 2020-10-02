@@ -1,0 +1,34 @@
+.Nav {
+  background: #333;
+}
+
+.Nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Nav li {
+  margin-right: 1rem;
+}
+
+.Nav a {
+  display: block;
+  padding: 1rem;
+  color: #ccc;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+}
+
+.Nav a:hover,
+.Nav a.active {
+  background-color: #222;
+}
+
+.Nav a.active {
+  color: white;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+}

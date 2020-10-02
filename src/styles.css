@@ -10,42 +10,16 @@ html {
   box-sizing: border-box;
 }
 
-body {
-  padding: 1rem;
-}
-
 *,
 *:before,
 *:after {
   box-sizing: inherit;
 }
 
-@keyframes wave {
-  0% {
-    transform: rotate(-5deg);
-  }
-  50% {
-    transform: rotate(65deg);
-  }
-  100% {
-    transform: rotate(-5deg);
-  }
-}
-
-.wave-hello {
-  display: inline-block;
-  transform-origin: bottom right;
-  animation: wave 1.25s ease 5;
-}
-
-.App {
+.Page {
   font-family: sans-serif;
   max-width: 600px;
   margin: 0 auto;
-}
-
-header {
-  text-align: center;
 }
 
 label {
@@ -71,11 +45,10 @@ textarea {
 }
 
 button,
-.DownloadButton {
-  display: block;
-  width: auto;
+.Button {
+  display: inline-block;
   padding: 1rem 1.5rem;
-  margin: 0 auto 1rem auto;
+  margin: 0 auto;
   background-color: rgb(0, 65, 194);
   color: white;
   font-size: 0.875rem;
@@ -86,16 +59,16 @@ button,
   border: none;
 }
 
-.button-success {
+.Button-success {
   background-color: #338700;
 }
 
-.button-update {
+.Button-update {
   background-color: #f5b324;
   color: black;
 }
 
-.button-error {
+.Button-error {
   background-color: #e1261c;
 }
 

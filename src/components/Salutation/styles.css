@@ -1,0 +1,17 @@
+@keyframes wave {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(65deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+.wave-hello {
+  display: inline-block;
+  transform-origin: bottom right;
+  animation: wave 1.25s ease 5;
+}

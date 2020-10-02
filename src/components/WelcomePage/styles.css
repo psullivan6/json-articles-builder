@@ -1,0 +1,27 @@
+.UploadInput {
+  padding: 2rem;
+  background-color: #ccc;
+}
+
+.ButtonGroup {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ButtonGroup .Button,
+.ButtonGroup span {
+  margin-right: 1rem;
+}
+
+.ButtonGroup .Button {
+  display: block;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.ButtonGroup span {
+  line-height: 1;
+  display: block;
+  font-weight: bold;
+}

@@ -229,6 +229,21 @@ export default function App() {
               />
               <br />
 
+              <a
+                className="DownloadButton"
+                download="stories.json"
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                  JSON.stringify(Object.values(stories))
+                )}`}
+              >
+                Download JSON
+              </a>
+
+              <br />
+              <br />
+
+              <hr />
+
               <CopyButton status={submitStatus} onClick={handleCopy} />
 
               <textarea

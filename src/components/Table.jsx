@@ -1,6 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
 import { useFormikContext } from "formik";
+import { parseDate } from "../utilities/date";
 
 const Table = ({ data, onEditItem, onRemoveItem }) => {
   const { resetForm } = useFormikContext();
@@ -39,7 +40,7 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
             <tr key={id}>
               <td>{title}</td>
               <td>{description}</td>
-              <td>{format(publishDate, "MM/dd/yy")}</td>
+              <td>{format(parseDate(publishDate), "MM/dd/yy")}</td>
               <td>
                 <button
                   type="button"

@@ -5,16 +5,9 @@ import Table from "./Table";
 import DatePicker from "./components/DatePicker";
 import "./styles.css";
 import StoriesPreview from "./components/StoriesPreview";
+import { initialFormValues } from "./utilities/constants";
 
-const initialValuesStatic = {
-  description: "",
-  expirationDate: null,
-  publishDate: new Date(),
-  title: "",
-  url: ""
-};
-
-const SubmitButton = ({ status, ...props }) => {
+const CopyButton = ({ status, ...props }) => {
   if (status === "success") {
     return (
       <button className="button-success" {...props}>
@@ -63,7 +56,7 @@ const CRUDButton = ({
         ...values
       }
     });
-    setInitialValues(initialValuesStatic);
+    setInitialValues(initialFormValues);
     setCrudStatus("create");
   };
 
@@ -85,11 +78,34 @@ export default function App() {
   const [stories, setStories] = useState({});
   const [crudStatus, setCrudStatus] = useState("create");
   const [showPreview, setShowPreview] = useState(false);
-  const [initialValues, setInitialValues] = useState(initialValuesStatic);
+  const [initialValues, setInitialValues] = useState(initialFormValues);
 
   useEffect(() => {
     localStorage.setItem("stories", JSON.stringify(stories));
   }, [stories]);
+
+  const handleSubmit = (values, actions) => {
+    const id = crudStatus === "create" ? uuidv4() : values.id;
+
+    actions.setSubmitting(false);
+    actions.resetForm({
+      values: initialFormValues
+    });
+
+    console.log("SUBMIT", crudStatus, id, actions);
+
+    setStories({
+      ...stories,
+      [id]: {
+        ...values,
+        id
+      }
+    });
+
+    if (crudStatus === "update") {
+      setCrudStatus("create");
+    }
+  };
 
   const handleEditItem = ({ data }) => {
     window.scrollTo({
@@ -97,7 +113,6 @@ export default function App() {
       left: 0,
       behavior: "smooth"
     });
-    setInitialValues(data);
     setCrudStatus("update");
   };
 
@@ -108,6 +123,20 @@ export default function App() {
 
   const togglePreview = () => {
     setShowPreview(!showPreview);
+  };
+
+  const handleCopy = () => {
+    document.getElementById("copyNode").select();
+    try {
+      document.execCommand("copy");
+      setSubmitStatus("success");
+    } catch (error) {
+      console.warning("error", error);
+      setSubmitStatus("error");
+    }
+    setTimeout(() => {
+      setSubmitStatus("idle");
+    }, 1500);
   };
 
   return (
@@ -131,20 +160,8 @@ export default function App() {
 
           <Formik
             initialValues={initialValues}
-            enableReinitialize={true}
-            onSubmit={(values) => {
-              document.getElementById("copyNode").select();
-              try {
-                document.execCommand("copy");
-                setSubmitStatus("success");
-              } catch (error) {
-                console.warning("error", error);
-                setSubmitStatus("error");
-              }
-              setTimeout(() => {
-                setSubmitStatus("idle");
-              }, 1500);
-            }}
+            // enableReinitialize={true}
+            onSubmit={handleSubmit}
           >
             <Form>
               <label htmlFor="title">Title:</label>
@@ -191,7 +208,11 @@ export default function App() {
                 placeholder="Description"
               />
 
-              <CRUDButton
+              <button type="submit" className={`button-${crudStatus}`}>
+                {`${crudStatus === "create" ? "Add" : "Update"} Story`}
+              </button>
+
+              {/* <CRUDButton
                 status={submitStatus}
                 setSubmitStatus={setSubmitStatus}
                 stories={stories}
@@ -199,7 +220,7 @@ export default function App() {
                 crudStatus={crudStatus}
                 setCrudStatus={setCrudStatus}
                 setInitialValues={setInitialValues}
-              />
+              /> */}
 
               <Table
                 data={stories}
@@ -207,10 +228,12 @@ export default function App() {
                 onRemoveItem={handleRemoveItem}
               />
               <br />
-              <SubmitButton type="submit" status={submitStatus} />
+
+              <CopyButton status={submitStatus} onClick={handleCopy} />
 
               <textarea
                 id="copyNode"
+                readOnly
                 value={JSON.stringify(Object.values(stories), null, 2)}
               />
             </Form>

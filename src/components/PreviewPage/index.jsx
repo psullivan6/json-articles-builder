@@ -1,8 +1,8 @@
 import React from "react";
 import { format } from "date-fns";
-import "./styles.css";
 import { useAppContext } from "../../utilities/AppContext";
 import { parseDate } from "../../utilities/date";
+import "./styles.css";
 
 const PreviewItem = ({ publishDate, title, description, url }) => {
   return (

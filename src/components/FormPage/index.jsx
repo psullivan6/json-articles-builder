@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 // Utilities
 import { useAppContext } from "../../utilities/AppContext";
-import { initialFormValues } from "../../utilities/constants";
+import { getInitialFormValues } from "../../utilities/constants";
 
 // Components
 import DatePicker from "../DatePicker";
@@ -26,10 +26,12 @@ const FormPage = () => {
     [hasUnsavedData]
   );
 
+  // Keep the stories in localStorage, though this is proving useless because of CodeSandbox restrictions
   useEffect(() => {
     localStorage.setItem("stories", JSON.stringify(stories));
   }, [stories]);
 
+  // Ensure the user is warned if trying to leave without downloading the latest JSON
   useEffect(() => {
     window.addEventListener("beforeunload", handleBeforeUnload);
 
@@ -38,19 +40,20 @@ const FormPage = () => {
     };
   }, [handleBeforeUnload]);
 
-  const handleSubmit = (values, actions) => {
-    const id = crudStatus === "create" ? uuidv4() : values.id;
+  const handleSubmit = ({ id, publishDate, ...values }, actions) => {
+    const storedId = crudStatus === "create" ? uuidv4() : id;
 
     actions.setSubmitting(false);
     actions.resetForm({
-      values: initialFormValues
+      values: getInitialFormValues()
     });
 
     setStories({
       ...stories,
-      [id]: {
+      [storedId]: {
         ...values,
-        id
+        publishDate: publishDate.toISOString(),
+        id: storedId
       }
     });
 
@@ -89,7 +92,7 @@ const FormPage = () => {
           the file with the Engineering team.
         </h2>
       </header>
-      <Formik initialValues={initialFormValues} onSubmit={handleSubmit}>
+      <Formik initialValues={getInitialFormValues()} onSubmit={handleSubmit}>
         <Form>
           <label htmlFor="title">Title:</label>
           <Field id="title" name="title" placeholder="Title" />

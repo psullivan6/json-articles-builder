@@ -4,7 +4,7 @@ import { useAppContext } from "../../utilities/AppContext";
 import Salutation from "../Salutation";
 import "./styles.css";
 
-const WelcomePage = ({ onNavigate }) => {
+const WelcomePage = () => {
   const { setStories } = useAppContext();
   const [fileData, setFileData] = useState();
 

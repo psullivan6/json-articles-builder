@@ -1,5 +1,5 @@
 import React from "react";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { useFormikContext } from "formik";
 import { parseDate } from "../../utilities/date";
 
@@ -8,11 +8,13 @@ import "./styles.css";
 const Table = ({ data, onEditItem, onRemoveItem }) => {
   const { resetForm } = useFormikContext();
 
-  const handleEdit = ({ id, data }) => {
+  const handleEdit = ({ id, data: { publishDate, ...data } }) => {
     resetForm({
-      values: data
+      values: {
+        ...data,
+        publishDate: parseISO(publishDate)
+      }
     });
-    console.log("data", data);
     onEditItem({ id, data });
   };
 

@@ -15,7 +15,7 @@ const Nav = () => {
         </li>
         <li>
           <NavLink activeClassName="active" to="/builder">
-            Articles Builder
+            Articles Editor
           </NavLink>
         </li>
         <li>

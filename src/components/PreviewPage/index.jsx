@@ -1,5 +1,5 @@
 import React from "react";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import "./styles.css";
 import { useAppContext } from "../../utilities/AppContext";
 import { parseDate } from "../../utilities/date";
@@ -18,30 +18,38 @@ const PreviewItem = ({ publishDate, title, description, url }) => {
 };
 
 const AdditionalInfo = ({ expirationDate, ...props }) => {
-  const date =
-    typeof expirationDate === "string"
-      ? parseISO(expirationDate)
-      : expirationDate;
-
   const failedKeys = Object.keys(props).filter((key) => !props[key]);
 
-  console.log("failedKeys", failedKeys);
-
-  if (!expirationDate || failedKeys.length === 0) {
+  if (!expirationDate && failedKeys.length === 0) {
     return null;
   }
 
+  const missingKeys = () => {
+    if (failedKeys.length > 1) {
+      const last = failedKeys.pop();
+      return `${failedKeys.join(", ")} and ${last}`;
+    }
+
+    return failedKeys[0];
+  };
+
   return (
-    <div>
+    <div className="AdditionalInfo">
       <h1>Additional Info:</h1>
-      <ul>
-        {expirationDate && (
-          <li>{`Expiration Date: ${format(date, "MM/dd/yy")}`}</li>
-        )}
-        {failedKeys.map((failedKey) => (
-          <li>{`Oops, you forgot ${failedKey}`}</li>
-        ))}
-      </ul>
+      {expirationDate && (
+        <p>{`Expiration Date: ${format(
+          parseDate(expirationDate),
+          "MM/dd/yy"
+        )}`}</p>
+      )}
+      {failedKeys.length > 0 && (
+        <p>
+          <span role="img" aria-label="Warning">
+            ⚠️
+          </span>{" "}
+          {` Oops, you forgot the ${missingKeys()}`}
+        </p>
+      )}
     </div>
   );
 };

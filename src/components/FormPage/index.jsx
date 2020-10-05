@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 
@@ -158,6 +159,16 @@ const FormPage = () => {
           >
             Download JSON
           </a>
+
+          <br />
+          <br />
+
+          <Link to="/preview" className="Button">
+            Preview This Content
+          </Link>
+
+          <br />
+          <br />
         </Form>
       </Formik>
     </div>

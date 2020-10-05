@@ -1,7 +1,9 @@
 import React from "react";
 import { format } from "date-fns";
 import { useFormikContext } from "formik";
-import { parseDate } from "../utilities/date";
+import { parseDate } from "../../utilities/date";
+
+import "./styles.css";
 
 const Table = ({ data, onEditItem, onRemoveItem }) => {
   const { resetForm } = useFormikContext();
@@ -10,6 +12,7 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
     resetForm({
       values: data
     });
+    console.log("data", data);
     onEditItem({ id, data });
   };
 

@@ -146,6 +146,7 @@ const ArticlesFormPage = () => {
 
           <br />
           <br />
+          <br />
 
           <Table
             data={stories}

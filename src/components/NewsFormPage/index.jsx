@@ -46,7 +46,7 @@ const NewsFormPage = () => {
   const handleSubmit = ({ id, publishDate, ...values }, actions) => {
     const storedId = crudStatus === 'create' ? uuidv4() : id;
 
-    console.log('values', values);
+    console.log('values', values, getInitialFormValues('news'));
 
     actions.setSubmitting(false);
     actions.resetForm({
@@ -131,12 +131,8 @@ const NewsFormPage = () => {
             </div>
           </div>
 
-          <br />
-
           <label htmlFor="url">Link URL:</label>
           <Field id="url" name="url" placeholder="Link URL" />
-
-          <br />
 
           <label htmlFor="description">Description:</label>
           <Field
@@ -146,16 +142,12 @@ const NewsFormPage = () => {
             placeholder="Description"
           />
 
-          <br />
-
           <label htmlFor="category">Category (optional)</label>
           <Field
             id="category"
             name="category"
             placeholder="Category (optional)"
           />
-
-          <br />
 
           <label htmlFor="section">Section</label>
           <Field as="select" id="section" name="section">
@@ -166,8 +158,6 @@ const NewsFormPage = () => {
             <option value="S">More Stories - S</option>
             <option value="E">Evergreen - E</option>
           </Field>
-
-          <br />
 
           <label htmlFor="image">Image URL*</label>
           <Field id="image" name="image" placeholder="Image URL" />
@@ -199,6 +189,7 @@ const NewsFormPage = () => {
             {`${crudStatus === 'create' ? 'Add' : 'Update'} Story`}
           </button>
 
+          <br />
           <br />
           <br />
 

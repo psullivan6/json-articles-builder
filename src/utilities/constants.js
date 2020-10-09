@@ -6,7 +6,7 @@ export const getInitialFormValues = (contentType) => ({
   url: '',
   ...(contentType === 'news' && {
     category: '',
-    image: null,
+    image: '',
     order: 0,
     section: '',
   }),

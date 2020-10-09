@@ -12,13 +12,30 @@ export function useAppContext() {
   return context;
 }
 
+const getInitialStories = () => {
+  const storedStories = localStorage.getItem('stories');
+
+  if (storedStories) {
+    return JSON.parse(storedStories);
+  }
+
+  return {};
+};
+
 export function AppContextProvider(props) {
-  const [stories, setStories] = useState({});
-  const [contentType, setContentType] = useState(null);
+  const [stories, setStories] = useState(getInitialStories);
+  const [contentType, setContentType] = useState(
+    localStorage.getItem('contentType')
+  );
+
+  const setContentTypeAndStore = (state) => {
+    localStorage.setItem('contentType', state);
+    setContentType(state);
+  };
 
   const value = {
     contentType,
-    setContentType,
+    setContentType: setContentTypeAndStore,
     storiesObj: stories,
     stories: Object.values(stories),
     setStories,

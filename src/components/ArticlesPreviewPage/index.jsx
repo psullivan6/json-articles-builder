@@ -2,12 +2,12 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useAppContext } from '../../utilities/AppContext';
 import { parseDate } from '../../utilities/date';
-import './styles.css';
+import styles from './styles.module.css';
 
 const PreviewItem = ({ publishDate, title, description, url }) => {
   return (
     // eslint-disable-next-line react/jsx-no-target-blank
-    <a className="PreviewItem" href={url} target="_blank">
+    <a className={styles.PreviewItem} href={url} target="_blank">
       <header>
         <h1>{title}</h1>
         <span>{format(parseDate(publishDate), 'MM/dd/yy')}</span>
@@ -34,7 +34,7 @@ const AdditionalInfo = ({ expirationDate, ...props }) => {
   };
 
   return (
-    <div className="AdditionalInfo">
+    <div className={styles.AdditionalInfo}>
       <h1>Additional Info:</h1>
       {expirationDate && (
         <p>{`Expiration Date: ${format(
@@ -71,12 +71,12 @@ const ArticlesPreviewPage = () => {
   });
 
   return (
-    <div className="StoriesPreview">
+    <div className={styles.StoriesPreview}>
       <h1>Stories Preview</h1>
       <h2>Current Stories:</h2>
       {activeStories.map((story) => (
-        <div className="PreviewContainer">
-          <PreviewItem key={story.id} {...story} />
+        <div className={styles.PreviewContainer} key={story.id}>
+          <PreviewItem {...story} />
           <AdditionalInfo {...story} />
         </div>
       ))}
@@ -85,8 +85,8 @@ const ArticlesPreviewPage = () => {
       <br />
       <h2>Future Stories:</h2>
       {futureStories.map((story) => (
-        <div className="PreviewContainer">
-          <PreviewItem key={story.id} {...story} />
+        <div className={styles.PreviewContainer} key={story.id}>
+          <PreviewItem {...story} />
           <AdditionalInfo {...story} />
         </div>
       ))}

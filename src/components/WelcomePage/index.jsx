@@ -1,41 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppContext } from "../../utilities/AppContext";
-import Salutation from "../Salutation";
-import "./styles.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAppContext } from '../../utilities/AppContext';
+import Salutation from '../Salutation';
+import './styles.css';
 
-const WelcomePage = () => {
-  const { setStories } = useAppContext();
-  const [fileData, setFileData] = useState();
-
-  const handleUpload = (event) => {
-    const reader = new FileReader(); // File reader to read the file
-
-    // This event listener will happen when the reader has read the file
-    reader.addEventListener("load", function () {
-      const result = JSON.parse(reader.result);
-
-      const parsedFileData = result.reduce((acc, item) => {
-        return {
-          ...acc,
-          [item.id]: item
-        };
-      }, {});
-
-      setStories(parsedFileData);
-      setFileData(parsedFileData);
-    });
-
-    reader.readAsText(event.target.files[0]); // Read the uploaded file
-  };
-
+const PageContent = ({ fileData, handleUpload }) => {
+  const { setStories, contentType, setContentType } = useAppContext();
   return (
     <>
-      <Salutation />
-      <h2>To get started, you can choose to&hellip;</h2>
-      <br />
       <h3>
-        Upload a .JSON file{" "}
+        Upload a .JSON file{' '}
         <span role="img" aria-label="Pointing to the JSON">
           👇
         </span>
@@ -51,11 +25,14 @@ const WelcomePage = () => {
         <>
           <h3>Would you like to&hellip;</h3>
           <div className="ButtonGroup">
-            <Link to="/builder" className="Button Button-update">
+            <Link
+              to={`/${contentType}-editor`}
+              className="Button Button-update"
+            >
               Edit the Stories
             </Link>
             <span>OR</span>
-            <Link to="/preview" className="Button">
+            <Link to={`/${contentType}-preview`} className="Button">
               Preview the Stories
             </Link>
           </div>
@@ -68,10 +45,81 @@ const WelcomePage = () => {
               👇
             </span>
           </h3>
-          <Link to="/builder" className="Button">
-            Start Fresh
+          <Link to={`/${contentType}-editor`} className="Button">
+            Start Fresh with a Blank Form
           </Link>
         </>
+      )}
+    </>
+  );
+};
+
+const SubHeadline = () => {
+  const { contentType } = useAppContext();
+
+  if (contentType) {
+    return <h2>Now choose to either&hellip;</h2>;
+  }
+
+  return (
+    <h2>
+      To get started, choose to create <br />
+      To View Articles or My News Stories
+    </h2>
+  );
+};
+
+const WelcomePage = () => {
+  const { setStories, contentType, setContentType } = useAppContext();
+  const [fileData, setFileData] = useState();
+
+  const handleUpload = (event) => {
+    const reader = new FileReader(); // File reader to read the file
+
+    // This event listener will happen when the reader has read the file
+    reader.addEventListener('load', function () {
+      const result = JSON.parse(reader.result);
+
+      const parsedFileData = result.reduce((acc, item) => {
+        return {
+          ...acc,
+          [item.id]: item,
+        };
+      }, {});
+
+      setStories(parsedFileData);
+      setFileData(parsedFileData);
+    });
+
+    reader.readAsText(event.target.files[0]); // Read the uploaded file
+  };
+
+  return (
+    <>
+      <Salutation />
+      <SubHeadline />
+      {!contentType && (
+        <div className="ButtonGroup">
+          <button
+            className="Button"
+            type="button"
+            onClick={() => setContentType('articles')}
+          >
+            Start with Articles
+          </button>
+          <span>OR</span>
+          <button
+            className="Button"
+            type="button"
+            onClick={() => setContentType('news')}
+          >
+            Start with News Stories
+          </button>
+        </div>
+      )}
+
+      {contentType && (
+        <PageContent fileData={fileData} handleUpload={handleUpload} />
       )}
     </>
   );

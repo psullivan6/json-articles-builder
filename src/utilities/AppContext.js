@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 const AppContext = createContext();
 
@@ -6,7 +6,7 @@ export function useAppContext() {
   const context = useContext(AppContext);
 
   if (!context) {
-    throw new Error("useAppContext must be used within a AppContextProvider");
+    throw new Error('useAppContext must be used within a AppContextProvider');
   }
 
   return context;
@@ -14,11 +14,14 @@ export function useAppContext() {
 
 export function AppContextProvider(props) {
   const [stories, setStories] = useState({});
+  const [contentType, setContentType] = useState(null);
 
   const value = {
+    contentType,
+    setContentType,
     storiesObj: stories,
     stories: Object.values(stories),
-    setStories
+    setStories,
   };
 
   return <AppContext.Provider value={value} {...props} />;
@@ -26,5 +29,5 @@ export function AppContextProvider(props) {
 
 export default {
   AppContextProvider,
-  useAppContext
+  useAppContext,
 };

@@ -1,0 +1,21 @@
+#image {
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  margin: 0 0 1.5rem 0;
+  font-size: 0.875rem;
+  color: hsl(0, 0%, 20%);
+}
+
+.description span {
+  display: block;
+}
+
+.description span:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.description code {
+  font-size: 1.25em;
+}

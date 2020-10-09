@@ -1,7 +1,13 @@
-export const getInitialFormValues = () => ({
-  description: "",
+export const getInitialFormValues = (contentType) => ({
+  description: '',
   expirationDate: null,
   publishDate: new Date(),
-  title: "",
-  url: ""
+  title: '',
+  url: '',
+  ...(contentType === 'news' && {
+    category: '',
+    image: null,
+    order: 0,
+    section: '',
+  }),
 });

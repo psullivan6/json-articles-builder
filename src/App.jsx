@@ -1,37 +1,75 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { AppContextProvider } from "./utilities/AppContext";
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
+import { AppContextProvider, useAppContext } from './utilities/AppContext';
 
 // Components
-import Nav from "./components/Nav";
+import Nav from './components/Nav';
 
 // Pages
-import FormPage from "./components/FormPage";
-import PreviewPage from "./components/PreviewPage";
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from './components/WelcomePage';
+
+import ArticlesFormPage from './components/ArticlesFormPage';
+import ArticlesPreviewPage from './components/ArticlesPreviewPage';
+
+import NewsFormPage from './components/NewsFormPage';
+import NewsPreviewPage from './components/NewsPreviewPage';
 
 // Styles
-import "./styles.css";
+import './styles.css';
 
-export default function App() {
+function App() {
+  const { contentType } = useAppContext();
+  const location = useLocation();
+
+  if (!contentType && location.pathname !== '/') {
+    return (
+      <>
+        <Nav />
+        <Redirect to="/" />
+      </>
+    );
+  }
+
   return (
-    <Router>
-      <AppContextProvider>
-        <main className="Page">
-          <Nav />
-          <Switch>
-            <Route path="/builder">
-              <FormPage />
-            </Route>
-            <Route path="/preview">
-              <PreviewPage />
-            </Route>
-            <Route path="/" exact>
-              <WelcomePage />
-            </Route>
-          </Switch>
-        </main>
-      </AppContextProvider>
-    </Router>
+    <>
+      <Nav />
+      <Switch>
+        <Route path="/articles-editor">
+          <ArticlesFormPage />
+        </Route>
+        <Route path="/news-editor">
+          <NewsFormPage />
+        </Route>
+
+        <Route path="/articles-preview">
+          <ArticlesPreviewPage />
+        </Route>
+        <Route path="/news-preview">
+          <NewsPreviewPage />
+        </Route>
+
+        <Route path="/" exact>
+          <WelcomePage />
+        </Route>
+      </Switch>
+    </>
   );
 }
+
+const AppWrapper = () => (
+  <Router>
+    <AppContextProvider>
+      <main className="Page">
+        <App />
+      </main>
+    </AppContextProvider>
+  </Router>
+);
+
+export default AppWrapper;

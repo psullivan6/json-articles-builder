@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Field, Form, Formik } from "formik";
-import { v4 as uuidv4 } from "uuid";
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Field, Form, Formik } from 'formik';
+import { v4 as uuidv4 } from 'uuid';
 
 // Utilities
-import { useAppContext } from "../../utilities/AppContext";
-import { getInitialFormValues } from "../../utilities/constants";
+import { useAppContext } from '../../utilities/AppContext';
+import { getInitialFormValues } from '../../utilities/constants';
 
 // Components
-import DatePicker from "../DatePicker";
-import Table from "../Table";
+import DatePicker from '../DatePicker';
+import Table from '../Table';
 
-const FormPage = () => {
-  const { storiesObj: stories, setStories } = useAppContext();
-  const [crudStatus, setCrudStatus] = useState("create");
+const ArticlesFormPage = () => {
+  const { contentType, storiesObj: stories, setStories } = useAppContext();
+  const [crudStatus, setCrudStatus] = useState('create');
   const [hasUnsavedData, setHasUnsavedData] = useState(false);
 
   const handleBeforeUnload = useCallback(
@@ -28,24 +28,24 @@ const FormPage = () => {
 
   // Keep the stories in localStorage, though this is proving useless because of CodeSandbox restrictions
   useEffect(() => {
-    localStorage.setItem("stories", JSON.stringify(stories));
+    localStorage.setItem('stories', JSON.stringify(stories));
   }, [stories]);
 
   // Ensure the user is warned if trying to leave without downloading the latest JSON
   useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [handleBeforeUnload]);
 
   const handleSubmit = ({ id, publishDate, ...values }, actions) => {
-    const storedId = crudStatus === "create" ? uuidv4() : id;
+    const storedId = crudStatus === 'create' ? uuidv4() : id;
 
     actions.setSubmitting(false);
     actions.resetForm({
-      values: getInitialFormValues()
+      values: getInitialFormValues(),
     });
 
     setStories({
@@ -53,12 +53,12 @@ const FormPage = () => {
       [storedId]: {
         ...values,
         publishDate: publishDate.toISOString(),
-        id: storedId
-      }
+        id: storedId,
+      },
     });
 
-    if (crudStatus === "update") {
-      setCrudStatus("create");
+    if (crudStatus === 'update') {
+      setCrudStatus('create');
     }
 
     if (!hasUnsavedData) {
@@ -70,9 +70,9 @@ const FormPage = () => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "smooth"
+      behavior: 'smooth',
     });
-    setCrudStatus("update");
+    setCrudStatus('update');
   };
 
   const handleRemoveItem = ({ id }) => {
@@ -139,7 +139,9 @@ const FormPage = () => {
           />
 
           <button type="submit" className={`Button-${crudStatus}`}>
-            {`${crudStatus === "create" ? "Add" : "Update"} Story`}
+            {`${crudStatus === 'create' ? 'Add' : 'Update'} ${
+              contentType === 'news' ? 'Story' : 'Article'
+            }`}
           </button>
 
           <br />
@@ -166,7 +168,7 @@ const FormPage = () => {
           <br />
           <br />
 
-          <Link to="/preview" className="Button">
+          <Link to="/articles-preview" className="Button">
             Preview This Content
           </Link>
 
@@ -178,4 +180,4 @@ const FormPage = () => {
   );
 };
 
-export default FormPage;
+export default ArticlesFormPage;

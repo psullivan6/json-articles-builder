@@ -48,5 +48,9 @@
 .Table button {
   box-sizing: border-box;
   padding: 0.5rem;
-  background-color: #ddd;
+  background-color: hsl(0, 0%, 90%);
+}
+
+.Table button:hover {
+  background-color: hsl(0, 0%, 80%);
 }

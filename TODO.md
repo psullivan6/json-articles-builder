@@ -1,0 +1,3 @@
+- add the rest of the new preview components
+- add message that "Hey we noticed you already have some stories in localStorage, would you like to use those or start fresh?" to welcome page
+- ensure codesandbox link works and share it out

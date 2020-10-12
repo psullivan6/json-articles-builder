@@ -5,7 +5,8 @@ import Salutation from '../Salutation';
 import './styles.css';
 
 const PageContent = ({ fileData, handleUpload }) => {
-  const { setStories, contentType, setContentType } = useAppContext();
+  const { contentType } = useAppContext();
+
   return (
     <>
       <h3>

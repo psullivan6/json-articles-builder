@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
+import { addMinutes, format } from 'date-fns';
 
 // Utilities
 import { useAppContext } from '../../utilities/AppContext';
@@ -52,7 +53,10 @@ const ArticlesFormPage = () => {
       ...stories,
       [storedId]: {
         ...values,
-        publishDate: publishDate.toISOString(),
+        publishDate: format(
+          addMinutes(publishDate, publishDate.getTimezoneOffset()),
+          'yyyy-MM-dd HH:mm:ss'
+        ),
         id: storedId,
       },
     });
@@ -159,7 +163,10 @@ const ArticlesFormPage = () => {
             className="Button"
             download="stories.json"
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-              JSON.stringify(Object.values(stories))
+              JSON.stringify(
+                // Remove the id from the final download
+                Object.values(stories).map(({ id, ...story }) => story)
+              )
             )}`}
             onClick={handleDownload}
           >

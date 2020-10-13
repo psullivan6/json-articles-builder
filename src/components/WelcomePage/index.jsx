@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../utilities/AppContext';
 import Salutation from '../Salutation';
+import WelcomeHasData from './components/WelcomeHasData';
 import './styles.css';
 
 const PageContent = ({ fileData, handleUpload }) => {
@@ -47,7 +48,7 @@ const PageContent = ({ fileData, handleUpload }) => {
             </span>
           </h3>
           <Link to={`/${contentType}-editor`} className="Button">
-            Start Fresh with a Blank Form
+            Start with a Blank Form
           </Link>
         </>
       )}
@@ -71,7 +72,7 @@ const SubHeadline = () => {
 };
 
 const WelcomePage = () => {
-  const { setStories, contentType, setContentType } = useAppContext();
+  const { stories, setStories, contentType, setContentType } = useAppContext();
   const [fileData, setFileData] = useState();
 
   const handleUpload = (event) => {
@@ -94,6 +95,10 @@ const WelcomePage = () => {
 
     reader.readAsText(event.target.files[0]); // Read the uploaded file
   };
+
+  if (stories.length > 0 && contentType) {
+    return <WelcomeHasData />;
+  }
 
   return (
     <>

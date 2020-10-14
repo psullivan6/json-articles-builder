@@ -8,10 +8,14 @@ import './styles.css';
 const Table = ({ data, onEditItem, onRemoveItem }) => {
   const { resetForm } = useFormikContext();
 
-  const handleEdit = ({ id, data: { publishDate, ...data } }) => {
+  const handleEdit = ({
+    id,
+    data: { expirationDate, publishDate, ...data },
+  }) => {
     resetForm({
       values: {
         ...data,
+        expirationDate: parseISO(expirationDate),
         publishDate: parseISO(publishDate),
       },
     });

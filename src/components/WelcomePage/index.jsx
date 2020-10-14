@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../utilities/AppContext';
+import { formatFromUpload } from '../../utilities/upAndDownload';
 import Salutation from '../Salutation';
 import WelcomeHasData from './components/WelcomeHasData';
 import './styles.css';
@@ -80,14 +81,7 @@ const WelcomePage = () => {
 
     // This event listener will happen when the reader has read the file
     reader.addEventListener('load', function () {
-      const result = JSON.parse(reader.result);
-
-      const parsedFileData = result.reduce((acc, item) => {
-        return {
-          ...acc,
-          [item.id]: item,
-        };
-      }, {});
+      const parsedFileData = formatFromUpload(reader.result);
 
       setStories(parsedFileData);
       setFileData(parsedFileData);

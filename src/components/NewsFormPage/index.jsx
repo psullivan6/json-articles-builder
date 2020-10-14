@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
-import { addMinutes, format } from 'date-fns';
 
 // Utilities
 import { useAppContext } from '../../utilities/AppContext';
@@ -44,7 +43,10 @@ const NewsFormPage = () => {
     };
   }, [handleBeforeUnload]);
 
-  const handleSubmit = ({ id, publishDate, ...values }, actions) => {
+  const handleSubmit = (
+    { id, expirationDate, publishDate, ...values },
+    actions
+  ) => {
     const storedId = crudStatus === 'create' ? uuidv4() : id;
 
     console.log('values', values, getInitialFormValues('news'));
@@ -58,10 +60,8 @@ const NewsFormPage = () => {
       ...stories,
       [storedId]: {
         ...values,
-        publishDate: format(
-          addMinutes(publishDate, publishDate.getTimezoneOffset()),
-          'yyyy-MM-dd HH:mm:ss'
-        ),
+        expirationDate: expirationDate ? expirationDate.toISOString() : null,
+        publishDate: publishDate.toISOString(),
         id: storedId,
       },
     });

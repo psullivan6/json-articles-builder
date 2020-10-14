@@ -90,7 +90,7 @@ const WelcomePage = () => {
     reader.readAsText(event.target.files[0]); // Read the uploaded file
   };
 
-  if (stories.length > 0 && contentType) {
+  if (stories.length > 0 && contentType && !fileData) {
     return <WelcomeHasData />;
   }
 

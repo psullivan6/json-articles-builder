@@ -15,7 +15,7 @@ const Table = ({ data, onEditItem, onRemoveItem }) => {
     resetForm({
       values: {
         ...data,
-        expirationDate: parseISO(expirationDate),
+        expirationDate: expirationDate ? parseISO(expirationDate) : null,
         publishDate: parseISO(publishDate),
       },
     });

@@ -58,38 +58,69 @@ const ArticlesPreviewPage = () => {
   const { stories } = useAppContext();
   const now = new Date().getTime();
 
-  const activeStories = stories.filter((story) => {
+  const mappedStories = stories.map((story) => {
     const publishUnix = new Date(story.publishDate).getTime();
 
-    return publishUnix <= now;
-  });
+    if (story.expirationDate != null) {
+      const expirationUnix = new Date(story.expirationDate).getTime();
 
-  const futureStories = stories.filter((story) => {
-    const publishUnix = new Date(story.publishDate).getTime();
+      if (expirationUnix < now) {
+        return {
+          ...story,
+          status: 'expired',
+        };
+      }
+    }
 
-    return publishUnix > now;
+    if (publishUnix > now) {
+      return {
+        ...story,
+        status: 'future',
+      };
+    }
+
+    return {
+      ...story,
+      status: 'active',
+    };
   });
 
   return (
     <div className={styles.StoriesPreview}>
       <h1>Stories Preview</h1>
       <h2>Current Stories:</h2>
-      {activeStories.map((story) => (
-        <div className={styles.PreviewContainer} key={story.id}>
-          <PreviewItem {...story} />
-          <AdditionalInfo {...story} />
-        </div>
-      ))}
+      {mappedStories
+        .filter((story) => story.status === 'active')
+        .map((story) => (
+          <div className={styles.PreviewContainer} key={story.id}>
+            <PreviewItem {...story} />
+            <AdditionalInfo {...story} />
+          </div>
+        ))}
+      <br />
+      <hr />
+      <br />
+      <h2>Expired Stories:</h2>
+      {mappedStories
+        .filter((story) => story.status === 'expired')
+        .map((story) => (
+          <div className={styles.PreviewContainer} key={story.id}>
+            <PreviewItem {...story} />
+            <AdditionalInfo {...story} />
+          </div>
+        ))}
       <br />
       <hr />
       <br />
       <h2>Future Stories:</h2>
-      {futureStories.map((story) => (
-        <div className={styles.PreviewContainer} key={story.id}>
-          <PreviewItem {...story} />
-          <AdditionalInfo {...story} />
-        </div>
-      ))}
+      {mappedStories
+        .filter((story) => story.status === 'future')
+        .map((story) => (
+          <div className={styles.PreviewContainer} key={story.id}>
+            <PreviewItem {...story} />
+            <AdditionalInfo {...story} />
+          </div>
+        ))}
     </div>
   );
 };

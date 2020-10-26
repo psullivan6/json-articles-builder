@@ -1,0 +1,67 @@
+.Container {
+  display: flex;
+}
+
+.Content {
+  text-decoration: none;
+  display: flex;
+  flex-wrap: wrap;
+  width: 480px;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-decoration: none;
+}
+
+.expired {
+  opacity: 0.5;
+}
+
+.expired:hover {
+  opacity: 1;
+}
+
+.Content .Box {
+  width: calc(100% - 110px - 1rem);
+  margin-right: 1rem;
+}
+
+.Content h1 {
+  color: black;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 6px 0 14px 0;
+}
+
+.ImageContainer {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.ImageContainer img {
+  width: 100%;
+}
+
+
+.details {
+  width: 100%;
+  color: rgb(168, 168, 168);
+  font-size: 12px;
+  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+
+p.description {
+  color: rgba(0, 0, 0, 0.44);
+  font-size: 14px;
+  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  margin: 6px 0px 0px;
+  line-height: 1.2;
+}
+
+.AdditionalInfo {
+  width: 120px;
+  padding-left: 1rem;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { format } from 'date-fns';
 import { useAppContext } from '../../utilities/AppContext';
 import { parseDate } from '../../utilities/date';
+import { getMappedStories } from '../../utilities/misc';
 import styles from './styles.module.css';
 
 const PreviewItem = ({ publishDate, title, description, url }) => {
@@ -56,34 +57,7 @@ const AdditionalInfo = ({ expirationDate, ...props }) => {
 
 const ArticlesPreviewPage = () => {
   const { stories } = useAppContext();
-  const now = new Date().getTime();
-
-  const mappedStories = stories.map((story) => {
-    const publishUnix = new Date(story.publishDate).getTime();
-
-    if (story.expirationDate != null) {
-      const expirationUnix = new Date(story.expirationDate).getTime();
-
-      if (expirationUnix < now) {
-        return {
-          ...story,
-          status: 'expired',
-        };
-      }
-    }
-
-    if (publishUnix > now) {
-      return {
-        ...story,
-        status: 'future',
-      };
-    }
-
-    return {
-      ...story,
-      status: 'active',
-    };
-  });
+  const mappedStories = getMappedStories(stories);
 
   return (
     <div className={styles.StoriesPreview}>

@@ -1,0 +1,40 @@
+.Container {
+  display: flex;
+}
+
+.Content {
+  display: block;
+  text-decoration: none;
+  width: 280px;
+  margin-bottom: 2rem;
+  margin-right: auto;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-decoration: none;
+}
+
+.Content h1 {
+  color: black;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 6px 0 14px 0;
+}
+
+
+.details {
+  width: 100%;
+  color: rgb(168, 168, 168);
+  font-size: 12px;
+  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+
+p.description {
+  color: rgba(0, 0, 0, 0.44);
+  font-size: 14px;
+  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  margin: 6px 0px 0px;
+  line-height: 1.2;
+}

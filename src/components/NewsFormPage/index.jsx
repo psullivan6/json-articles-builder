@@ -117,8 +117,9 @@ const NewsFormPage = () => {
                 id="publishDate"
                 name="publishDate"
                 placeholderText="Click to select a date"
-                showTimeSelect
-                dateFormat="MM/dd/yyyy h:mm aa"
+                // showTimeSelect
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                dateFormat="MM/dd/yyyy"
               />
             </div>
 
@@ -129,8 +130,9 @@ const NewsFormPage = () => {
                 id="expirationDate"
                 name="expirationDate"
                 placeholderText="Leave Blank if none"
-                showTimeSelect
-                dateFormat="MM/dd/yyyy h:mm aa"
+                // showTimeSelect
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                dateFormat="MM/dd/yyyy"
               />
             </div>
           </div>

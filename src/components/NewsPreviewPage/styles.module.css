@@ -1,76 +1,13 @@
 .StoriesPreview {
-  margin-bottom: 2rem;
+  margin-bottom: 10rem;
 }
 
-.PreviewContainer {
-  display: flex;
-}
-
-.PreviewItem {
-  display: block;
-  padding: 1.5rem 1rem;
-  width: 410px;
-  margin: 0 auto 0 0;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
-  text-decoration: none;
-}
-
-.AdditionalInfo {
-  width: 190px;
-  padding: 1rem;
-}
-
-.AdditionalInfo h1 {
-  font-size: 16px;
-}
-
-/* ========================================================================== */
-/* Top Headlines */
-/* ========================================================================== */
-.ImageContainer {
-  position: relative;
-  height: 300px;
+.StoriesPreview > h2 {
+  padding: 0.5rem;
   background-color: rgb(1, 33, 105);
-  overflow: hidden;
+  color: white;
 }
 
-.ImageContainer img {
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ImageContainer h1 {
-  font-family: Roboto, Roboto-Medium, Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  position: absolute;
-  color: rgb(255, 255, 255);
-  font-size: 18px;
-  background: linear-gradient(-180deg, rgba(0, 46, 136, 0) 0%, rgb(0, 46, 136) 100%);
-  bottom: 0px;
-  width: 100%;
-  margin: 0;
-  padding: 24px 10px;
-  line-height: 24px;
-  display: flex;
-  justify-content: left;
-  text-shadow: rgb(1, 33, 105) 2px 2px 8px;
-}
-
-.details {
-  color: rgb(168, 168, 168);
-  font-size: 12px;
-  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  padding-left: 1px;
-}
-
-p.description {
-  color: rgba(0, 0, 0, 0.44);
-  font-size: 14px;
-  font-family: Roboto, Roboto-Regular, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  margin: 6px 0px 0px;
-  line-height: 1.2;
+.StoriesPreview > .SecondarySubHeadline {
+  background-color: black;
 }

@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Utilities
 import { useAppContext } from '../../utilities/AppContext';
 import { getInitialFormValues } from '../../utilities/constants';
+import { formatForDownload } from '../../utilities/upAndDownload';
 
 // Components
 import DatePicker from '../DatePicker';
@@ -48,8 +49,6 @@ const NewsFormPage = () => {
     actions
   ) => {
     const storedId = crudStatus === 'create' ? uuidv4() : id;
-
-    console.log('values', values, getInitialFormValues('news'));
 
     actions.setSubmitting(false);
     actions.resetForm({
@@ -210,10 +209,7 @@ const NewsFormPage = () => {
             className="Button"
             download="stories.json"
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-              JSON.stringify(
-                // Remove the id from the final download
-                Object.values(stories).map(({ id, ...story }) => story)
-              )
+              formatForDownload(Object.values(stories))
             )}`}
             onClick={handleDownload}
           >

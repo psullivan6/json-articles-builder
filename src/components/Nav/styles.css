@@ -1,4 +1,7 @@
 .Nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #333;
 }
 
@@ -31,4 +34,15 @@
   font-weight: bold;
   letter-spacing: 0.01em;
   text-decoration: underline;
+}
+
+.Nav .version {
+  margin: 0 1rem;
+  padding: 0.5em;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+}
+.Nav .version span {
+  display: block;
+  text-align: center;
 }

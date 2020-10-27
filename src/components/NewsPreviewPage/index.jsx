@@ -15,8 +15,6 @@ import styles from './styles.module.css';
 
 const NewsPreviewPage = () => {
   const { stories } = useAppContext();
-  const now = new Date().getTime();
-
   const mappedStories = getMappedStories(stories);
 
   const topHeadlinesStories = _sortBy(
